@@ -1,11 +1,23 @@
-const staticResponses = {"소개": "NOPLL은 플라스틱 라벨 제거를 중심으로 한 친환경 플랫폼입니다. 환경 보호를 위한 정보를 제공합니다.", "메뉴": "현재 메뉴는 ‘분리배출 가이드’, ‘AI 인식기’, ‘프로젝트 소개’, ‘문의하기’로 구성되어 있습니다.", "AI 인식기": "AI 인식기는 카메라를 통해 쓰레기를 인식하고 올바른 분리배출 방법을 알려주는 기능입니다.", "문의": "문의사항은 contact@nopll.net 으로 이메일을 보내주세요.", "플라스틱": "플라스틱은 깨끗이 씻고 라벨을 제거한 후 플라스틱 전용함에 버려주세요.", "비닐": "비닐류는 음식물이나 이물질을 제거하고 비닐 전용 수거함에 버려주세요.", "종이": "종이는 젖지 않도록 하고 이물질을 제거한 후 종이류로 배출하세요.", "캔": "캔은 내용물을 비우고 압착하여 캔류 전용함에 배출합니다.", "유리병": "유리병은 깨끗이 씻고 뚜껑을 제거한 후 유리병 전용함에 배출하세요.", "일반쓰레기": "재활용이 불가능한 폐기물은 일반쓰레기 봉투에 넣어 배출해야 합니다.", "스티로폼": "스티로폼은 부피를 줄여 배출하고 음식물이 묻었다면 일반쓰레기로 버려야 해요.", "라벨": "플라스틱 제품의 라벨은 재활용을 방해하므로 반드시 제거하고 버려주세요.", "분리배출": "분리배출 가이드를 통해 다양한 품목의 올바른 배출 방법을 확인해보세요.", "NOPLL": "NOPLL은 No Plastic Label Life의 줄임말로, 라벨 없는 친환경 생활을 지향합니다.", "운영시간": "NOPLL 웹사이트는 24시간 언제든지 이용할 수 있습니다.", "누가 만들었어": "NOPLL은 환경에 관심 있는 청소년 개발자 팀이 제작한 웹서비스입니다."};
+
+const staticResponses = {
+  "질문": "제가 도와드릴 수 있는 질문은 다음과 같아요:\n- 플라스틱\n- 비닐\n- 유리병\n- 스티로폼\n- 일반쓰레기\n- 메뉴\n- 소개\n- AI 인식기\n- 문의",
+  "소개": "NOPLL은 플라스틱 라벨 없는 삶을 목표로 하는 환경 정보 플랫폼입니다.",
+  "메뉴": "현재 메뉴는 ‘분리배출 가이드’, ‘AI 인식기’, ‘프로젝트 소개’, ‘문의하기’로 구성되어 있어요.",
+  "AI 인식기": "AI 인식기는 카메라로 쓰레기를 인식하고 분리배출 방법을 안내해주는 기능이에요.",
+  "문의": "문의사항은 contact@nopll.net 으로 메일 주세요!",
+  "플라스틱": "플라스틱은 깨끗이 씻고 라벨과 뚜껑을 제거한 후 색상별로 분리해 배출해주세요.\n👉 투명 페트병은 별도 분리 수거!",
+  "비닐": "비닐은 이물질 없이 깨끗해야 재활용 가능합니다.\n※ 오염된 비닐은 일반쓰레기로!",
+  "유리병": "유리병은 내용물 비우고 뚜껑 제거 후 조심스럽게 유리병 전용함에 버려주세요.",
+  "스티로폼": "스티로폼은 깨끗한 경우 재활용, 오염된 경우 일반쓰레기로 배출해요.",
+  "일반쓰레기": "재활용이 어렵거나 오염된 쓰레기는 일반쓰레기 봉투에 담아 배출해야 해요."
+};
 
 function sendMessage() {
   const input = document.getElementById("user-input");
   const message = input.value.trim();
   if (message === "") return;
 
-  appendMessage("👤", message);
+  appendMessage("user", message);
   input.value = "";
 
   let reply = "죄송해요, 그 내용은 아직 학습되지 않았어요.";
@@ -15,13 +27,26 @@ function sendMessage() {
       break;
     }
   }
-  appendMessage("🤖", reply);
+  appendMessage("bot", reply);
 }
 
-function appendMessage(sender, text) {
+function appendMessage(role, text) {
   const chatBox = document.getElementById("chat-box");
   const msgDiv = document.createElement("div");
-  msgDiv.innerHTML = `<strong>${sender}</strong>: ${text}`;
+  msgDiv.className = role;
+  msgDiv.textContent = text;
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+window.onload = function() {
+  const greeting = "🌱 안녕하세요! 저는 NOPLL의 안내 챗봇 REVO입니다.";
+  const intro = "NOPLL은 'No Plastic Label Life'의 약자로, 플라스틱 라벨 없는 친환경 생활을 지향하는 플랫폼이에요.";
+  const slogan = "♻️ 슬로건: '분리배출을 쉽게, 환경보호는 자연스럽게'";
+  const hint = "💡 예시 질문: 플라스틱, 비닐, 메뉴, 소개, AI 인식기, 문의 등 입력해보세요!";
+
+  appendMessage("bot", greeting);
+  appendMessage("bot", intro);
+  appendMessage("bot", slogan);
+  appendMessage("bot", hint);
+};
